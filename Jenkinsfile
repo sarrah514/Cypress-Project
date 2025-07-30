@@ -1,40 +1,30 @@
 pipeline {
     agent any
-
     stages {
-        stage('Checkout code') {
+        stage('Checkout') {
             steps {
-                git url: 'https://github.com/sarrah514/cypress-project.git', branch: 'main'
+                git url: 'https://github.com/sarrah514/Cypress-Project.git', branch: 'main'
             }
         }
-
-        stage('Install dependencies') {
+        stage('Install') {
             steps {
                 bat 'npm install'
             }
         }
-
-        stage('Run ajoutcv.cy.js test') {
+        stage('Check files') {
             steps {
-                bat 'npx cypress run --spec "cypress/e2e/ajoutcv.cy.js"'
+                bat 'dir cypress\\e2e'
             }
         }
-
-        stage('Publish HTML Report') {
+        stage('Run tests') {
             steps {
-                publishHTML (target: [
-                    reportDir: 'cypress/reports',
-                    reportFiles: 'mochawesome.html',
-                    reportName: 'Cypress Test Report',
-                    keepAll: true
-                ])
+                bat 'npx cypress run --spec cypress/e2e/ajoutcv.cy.js'
             }
         }
-    }
-
-    post {
-        always {
-            echo 'Pipeline terminé.'
+        stage('Publish report') {
+            steps {
+                // ajoute ta génération de rapport ici si besoin
+            }
         }
     }
 }
