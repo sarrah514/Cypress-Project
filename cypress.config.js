@@ -1,17 +1,17 @@
 const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
-  e2e: {
-    setupNodeEvents(on, config) {
-      require('cypress-mochawesome-reporter/plugin')(on);
-    },
-    specPattern: 'cypress/e2e/*.cy.js'
-  },
   reporter: 'cypress-mochawesome-reporter',
   reporterOptions: {
     reportDir: 'cypress/reports',
     overwrite: false,
     html: true,
-    json: true
+    json: false,
+  },
+  e2e: {
+    setupNodeEvents(on, config) {
+      require('cypress-mochawesome-reporter/plugin')(on)
+    },
+    specPattern: 'cypress/e2e/AjoutCV.cy.js', // ou modifie si tu veux un seul fichier
   }
 })
