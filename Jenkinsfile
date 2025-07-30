@@ -23,8 +23,9 @@ pipeline {
         }
         stage('Publish report') {
             steps {
-                // ajoute ta génération de rapport ici si besoin
+                echo 'Rapport de test à générer ici'
             }
         }
     }
 }
+
