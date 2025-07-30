@@ -1,31 +1,42 @@
 pipeline {
     agent any
+
     stages {
-        stage('Checkout') {
+        stage('Install dependencies') {
             steps {
-                git url: 'https://github.com/sarrah514/Cypress-Project.git', branch: 'main'
+                bat 'npm install'
             }
         }
-        stage('Install') {
+
+        stage('Run Cypress Tests') {
             steps {
-                bat 'npm ci'
-                bat 'npx cypress -v'
+                bat '''
+                    npx cypress run --reporter mochawesome ^
+                    --reporter-options reportDir=cypress/reports,overwrite=false,html=false,json=true ^
+                    --spec "cypress/e2e/ajoutcv.cy.js"
+                '''
             }
         }
-        stage('Check files') {
+
+        stage('Generate HTML report') {
             steps {
-                bat 'dir cypress\\e2e'
+                bat 'mkdir mochareports'
+                bat 'npx mochawesome-merge cypress/reports/*.json > mochareports/output.json'
+                bat 'npx marge mochareports/output.json --reportDir mochareports --reportFilename index.html'
             }
         }
-        stage('Run tests') {
-            steps {
-                bat 'npx cypress run --spec "cypress/e2e/ajoutcv.cy.js"'
-            }
-        }
-        stage('Publish report') {
-            steps {
-                echo 'À implémenter'
-            }
+    }
+
+    post {
+        always {
+            publishHTML([
+                reportDir: 'mochareports',
+                reportFiles: 'index.html',
+                reportName: 'Rapport de test Cypress',
+                keepAll: true,
+                alwaysLinkToLastBuild: true,
+                allowMissing: false
+            ])
         }
     }
 }
