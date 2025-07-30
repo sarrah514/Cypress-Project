@@ -10,13 +10,13 @@ pipeline {
 
         stage('Install dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage('Run ajoutcv.cy.js test') {
             steps {
-                sh 'npx cypress run --spec "cypress/e2e/ajoutcv.cy.js"'
+                bat 'npx cypress run --spec "cypress/e2e/ajoutcv.cy.js"'
             }
         }
     }
