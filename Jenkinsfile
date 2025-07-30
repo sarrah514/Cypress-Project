@@ -13,19 +13,18 @@ pipeline {
         }
         stage('Check files') {
             steps {
-                bat 'dir cypress\\e2e'
+                bat 'dir "cypress\\e2e"'
             }
         }
         stage('Run tests') {
             steps {
-                bat 'npx cypress run --spec cypress/e2e/ajoutcv.cy.js'
+                bat '"npx" cypress run --spec "cypress/e2e/ajoutcv.cy.js"'
             }
         }
         stage('Publish report') {
             steps {
-                echo 'Rapport de test à générer ici'
+                // Tu pourras ajouter ici la génération et publication du rapport HTML
             }
         }
     }
 }
-
