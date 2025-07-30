@@ -8,22 +8,24 @@ pipeline {
         }
         stage('Install') {
             steps {
-                bat 'npm install'
+                bat 'npm ci'
+                bat 'npx cypress -v'
             }
         }
         stage('Check files') {
             steps {
-                bat 'dir "cypress\\e2e"'
+                bat 'dir cypress\\e2e'
             }
         }
         stage('Run tests') {
             steps {
-                bat '"npx" cypress run --spec "cypress/e2e/ajoutcv.cy.js"'
+                bat 'npx cypress run --spec "cypress/e2e/ajoutcv.cy.js"'
             }
         }
         stage('Publish report') {
             steps {
-         echo "Démarrage du pipeline"            }
+                echo 'À implémenter'
+            }
         }
     }
 }
