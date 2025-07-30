@@ -23,8 +23,7 @@ pipeline {
         }
         stage('Publish report') {
             steps {
-                // Tu pourras ajouter ici la génération et publication du rapport HTML
-            }
+         echo "Démarrage du pipeline"            }
         }
     }
 }
