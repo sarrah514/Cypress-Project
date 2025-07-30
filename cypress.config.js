@@ -1,18 +1,17 @@
-const { defineConfig } = require('cypress');
+const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      // Hook avant que le navigateur ne démarre
-      on('before:browser:launch', (browser = {}, launchOptions) => {
-        if (browser.name === 'chrome') {
-          // Ajoute les arguments pour éviter le crash GPU
-          launchOptions.args.push('--disable-gpu');
-          launchOptions.args.push('--disable-dev-shm-usage');
-        }
-        return launchOptions;
-      });
+      require('cypress-mochawesome-reporter/plugin')(on);
     },
-    baseUrl: 'https://app.career.allence.cloud', // optionnel
+    specPattern: 'cypress/e2e/*.cy.js'
   },
-});
+  reporter: 'cypress-mochawesome-reporter',
+  reporterOptions: {
+    reportDir: 'cypress/reports',
+    overwrite: false,
+    html: true,
+    json: true
+  }
+})

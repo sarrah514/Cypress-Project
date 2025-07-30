@@ -19,11 +19,22 @@ pipeline {
                 bat 'npx cypress run --spec "cypress/e2e/ajoutcv.cy.js"'
             }
         }
+
+        stage('Publish HTML Report') {
+            steps {
+                publishHTML (target: [
+                    reportDir: 'cypress/reports',
+                    reportFiles: 'mochawesome.html',
+                    reportName: 'Cypress Test Report',
+                    keepAll: true
+                ])
+            }
+        }
     }
 
     post {
         always {
-            echo 'Tests Cypress terminés'
+            echo 'Pipeline terminé.'
         }
     }
 }
