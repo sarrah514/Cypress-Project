@@ -3,7 +3,7 @@ describe('Test amélioration cv', () => {
     cy.visit('https://app-uat.career.allence.cloud/auth/login');
     cy.get('input[type="email"]').type('habibisarra042@gmail.com');
     cy.get('input[type="password"]').type('123456');
-    cy.contains('button', 'Sign In').click();
+    cy.contains('button', 'Se connecter').click();
     cy.url().should('include', '/home');
     cy.wait(3000);
 
@@ -20,9 +20,13 @@ describe('Test amélioration cv', () => {
 
     cy.url().should('include', '/chat');
     cy.wait(3000);
-
+    // Ouvre une nouvelle discussion en cliquant sur le bouton +
+cy.get('mat-icon')
+  .contains('add')
+  .click({ force: true });
+cy.wait(3000);
     const sendMessageAndWaitForBot = (message) => {
-      cy.get('input[placeholder="Type a message"]').clear().type(message);
+      cy.get('input[placeholder="Tapez un message"]').clear().type(message);
       cy.get('button.send-btn').click({ force: true });
 
       // Vérifie que le message utilisateur apparaît
@@ -36,12 +40,12 @@ describe('Test amélioration cv', () => {
     };
 
     sendMessageAndWaitForBot('bonjour');
-    cy.wait(3000);
+    cy.wait(8000);
 
     sendMessageAndWaitForBot('je veux améliorer mon cv');
-        cy.wait(6000);
+        cy.wait(8000);
     sendMessageAndWaitForBot('Autres idées svp');
-        cy.wait(6000);
+        cy.wait(8000);
 cy.get('button.clear-history').click();
         cy.wait(3000);
 cy.get('button.delete-btn').click();
