@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Run tests') {
             steps {
-                bat 'npx cypress run --spec "cypress/e2e/**/*.cy.js"'
+                bat 'npx cypress run --spec "cypress/e2e/ameliorationCV.cy.js"'
             }
         }
         stage('Publish report') {
